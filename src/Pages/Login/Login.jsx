@@ -13,6 +13,21 @@ function Login() {
   const { loading, setLoading, loginUser, googleAuth } =
     useContext(AuthContext);
 
+  const userHandle = event => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    loginUser(email, password)
+      .then(() => {
+        navigate(from, { replace: true });
+      })
+      .catch(error => {
+        setLoading(false);
+        console.log(error.message);
+      });
+  };
+
   const googleHandle = () => {
     googleAuth()
       .then(() => {
@@ -31,7 +46,7 @@ function Login() {
           Welcome to J-Mart
         </h2>
         <h4 className="text-center text-[18px]">Login</h4>
-        <form action="" className="py-3 px-10">
+        <form onSubmit={userHandle} action="" className="py-3 px-10">
           <div className="pb-3">
             <input
               type="email"
@@ -53,13 +68,12 @@ function Login() {
               type="submit"
               className="w-full outline-0 border bg-purple cursor-pointer text-white border-purple py-[6px] pl-3"
             >
-              {loading ? <TbFidgetSpinner size={24} className="mx-auto animate-spin" />:"Continue"}
+              {loading ? (
+                <TbFidgetSpinner size={24} className="mx-auto animate-spin" />
+              ) : (
+                "Continue"
+              )}
             </button>
-            {/* <input
-              type="submit"
-              value={loading ? <TbFidgetSpinner size={24} className="mx-auto animate-spin" />:"Continue"}
-              className="w-full outline-0 border bg-purple cursor-pointer text-white border-purple py-[6px] pl-3"
-            /> */}
           </div>
         </form>
         <p className="text-center">Or</p>
