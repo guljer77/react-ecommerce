@@ -12,11 +12,23 @@ import { MdOutlineHeadphones } from "react-icons/md";
 import { IoIosShirt } from "react-icons/io";
 import Card from "./Card";
 import { Link } from "react-router-dom";
+import Pagination from "./Pagination";
 
 function Shop() {
   const [category, setCategory] = useState(false);
   const [product, setProduct] = useState(Product);
   const [searchTitle, setSearchTitle] = useState("");
+
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productPerPage = 6;
+  const indexOfLastPage = currentPage * productPerPage;
+  const indexOfFirstPage = indexOfLastPage - productPerPage;
+  const currentProduct = product.slice(indexOfFirstPage, indexOfLastPage);
+  //pagination function
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const updateToggle = id => {
     const updateProduct = Product.filter(item => item.category === id);
@@ -339,12 +351,22 @@ function Shop() {
                 </div>
               </div>
               <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
-                {product.slice(0, 9).map(item => (
+                {currentProduct.map(item => (
                   <Card key={item?.id} item={item} />
                 ))}
               </div>
             </div>
           </div>
+        </Container>
+      </div>
+      <div className="py-10">
+        <Container>
+          <Pagination
+            paginate={paginate}
+            productPerPage={productPerPage}
+            totalProduct={product.length}
+            activePage={currentPage}
+          />
         </Container>
       </div>
     </div>
