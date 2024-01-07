@@ -20,6 +20,11 @@ function Nav() {
       console.log(error.message);
     })
   }
+
+  const product = localStorage.getItem('product');
+  const newItem = JSON.parse(product);
+  console.log(newItem);
+
   return (
     <div className="py-5">
       <Container>
@@ -73,7 +78,11 @@ function Nav() {
               </div>
               <Link to="/cart" className="relative">
                 <MdShoppingCart className="lg:text-[22px] text-[20px]" />
-                <span className="absolute -top-4 left-5 text-purple">1</span>
+                <span className="absolute -top-4 left-5 text-purple">
+                  {/* {
+                    newItem.map(item=><p key={item?.id}>{item.length}</p>)
+                  } */}
+                </span>
               </Link>
               <div
                 onClick={() => setMenuUser(!menuUser)}
