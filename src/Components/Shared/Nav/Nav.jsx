@@ -13,17 +13,13 @@ function Nav() {
   const [menu, setMenu] = useState(false);
   const [menuUser, setMenuUser] = useState(false);
   const { user, userSignOut } = useContext(AuthContext);
-  const signOutHandle = () =>{
+  const signOutHandle = () => {
     userSignOut()
-    .then(()=>{})
-    .catch(error=>{
-      console.log(error.message);
-    })
-  }
-
-  const product = localStorage.getItem('product');
-  const newItem = JSON.parse(product);
-  console.log(newItem);
+      .then(() => {})
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <div className="py-5">
@@ -78,19 +74,23 @@ function Nav() {
               </div>
               <Link to="/cart" className="relative">
                 <MdShoppingCart className="lg:text-[22px] text-[20px]" />
-                <span className="absolute -top-4 left-5 text-purple">
-                  {/* {
-                    newItem.map(item=><p key={item?.id}>{item.length}</p>)
-                  } */}
-                </span>
+                <span className="absolute -top-4 left-5 text-purple"></span>
               </Link>
               <div
                 onClick={() => setMenuUser(!menuUser)}
                 className="flex items-center gap-1 border p-1 rounded-md border-purple cursor-pointer"
               >
-                {
-                  user ? <><img src={user?.photoURL} alt="" className="w-8 h-8 rounded-full" /></>:<FcManager className="lg:text-[30px] text-[24px]" />
-                }
+                {user ? (
+                  <>
+                    <img
+                      src={user?.photoURL}
+                      alt=""
+                      className="w-8 h-8 rounded-full"
+                    />
+                  </>
+                ) : (
+                  <FcManager className="lg:text-[30px] text-[24px]" />
+                )}
                 <FaAngleDown className="text-[18px] font-light" />
               </div>
               {menuUser && (

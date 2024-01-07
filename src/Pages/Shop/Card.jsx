@@ -12,13 +12,9 @@ import { saveProduct } from "../../Api/utils";
 
 function Card({ item }) {
   const saveItem = () => {
-    const product = [
-      {
-        id: item?.id,
-        name: item?.name,
-        price: item?.price,
-      },
-    ];
+    const product = [{
+      ...item
+    }];
     saveProduct(product);
   };
   return (
@@ -52,16 +48,20 @@ function Card({ item }) {
           </Link>
           <p className="text-purple text-[16px]">$ {item?.price}</p>
           <div className="flex items-center justify-between py-3">
-            <span className="flex items-center gap-1 underline text-purple">
+            <Link
+              to={`/details/${item?.id}`}
+              className="flex items-center gap-1 underline text-purple"
+            >
               <FaRegEye /> Details
-            </span>
-            <span
+            </Link>
+            <Link
+              to="/cart"
               onClick={saveItem}
               className="flex cursor-pointer items-center gap-1 px-3 py-1 bg-purple text-white rounded-md"
             >
               <IoMdCart />
               Add to Cart
-            </span>
+            </Link>
           </div>
         </div>
       </div>
